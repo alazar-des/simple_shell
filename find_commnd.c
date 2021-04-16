@@ -39,7 +39,7 @@ void _strcon(char *dest, char *s1, char *s2)
 char *find_path(char *cmd, list_t *head)
 {
 	int fd, i;
-	char *temp1, *fullpath;
+	char *temp1 = NULL, *fullpath = NULL;
 
 	i = 0;
 	while (cmd[i] != '\0')

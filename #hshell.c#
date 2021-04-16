@@ -14,7 +14,7 @@ int main(void)
 {
 	char *buf = NULL;
 	size_t len = 0;
-	ssize_t wr, nread, s1, s2, i;
+	ssize_t wr, nread, s;
 	list_t *head = NULL;
 	const char *name = "PATH";
 	int status = 1;
@@ -28,33 +28,20 @@ int main(void)
 		{
 			perror("hsh: ");
 			free_mem(buf, head);
-			i = 0;
-			if (argv != NULL)
-			{
-				while (argv[i] != NULL)
-				{
-					free(argv[i]);
-					i++;
-				}
-				if (argv != NULL)
-					free(argv);
-			}
 			exit(EXIT_FAILURE);
 		}
 		nread = read_cmd(&buf, &len, head);
 		if (nread != 1)
 		{
-			s1 = count_arg(buf);
-			s2 = s1;
-			argv = malloc((s1 + 1) * (sizeof(char *)));
-			if (s1 >= 1)
+			s = count_arg(buf);
+			argv = malloc(s * sizeof(char *));
+			if (s >= 1)
 			{
-				parse_arg(buf, argv, s1);
-				status = execute(argv, head, s2);
+				parse_arg(buf, argv, s);
+				status = execute(argv, head);
 			}
 		}
 	}
 	free_mem(buf, head);
-	free(argv);
 	return (0);
 }

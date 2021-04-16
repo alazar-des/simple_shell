@@ -43,7 +43,7 @@ ssize_t count_arg(char *buf)
  *
  * Return: parsed words
  */
-void parse_arg(char *buf, char *argv[], ssize_t argc)
+void parse_arg(char *buf, char **argv, ssize_t argc)
 {
 	ssize_t i;
 	char *delim = " \n";

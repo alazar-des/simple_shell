@@ -35,10 +35,11 @@ void print_env(void)
  *
  * Return: on success 0
  */
-int execute(char *argv[], list_t *head)
+int execute(char **argv, list_t *head, ssize_t s)
 {
 	pid_t pid;
 	int status;
+	ssize_t i;
 
 	if (_strcmp(argv[0], "env") == 0)
 	{
@@ -64,11 +65,29 @@ int execute(char *argv[], list_t *head)
 		else
 		{
 			waitpid(pid, &status, 0);
-			if (argv[0] != NULL)
-				free(argv[0]);
+			i = 0;
+			while (i < s)
+			{
+				if (argv[i] != NULL)
+					free(argv[i]);
+				i++;
+			}
+			if (argv != NULL)
+				free(argv);
 		}
 	}
 	else
+	{
 		write(STDOUT_FILENO, "hsh: No such file or directory\n", 31);
+		i = 0;
+		while (i < s)
+		{
+			if (argv[i] != NULL)
+				free(argv[i]);
+			i++;
+		}
+		if (argv != NULL)
+			free(argv);
+	}
 	return (1);
 }
