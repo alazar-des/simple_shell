@@ -34,12 +34,13 @@ int main(void)
 		{
 			const ssize_t s = count_arg(buf);
 
-			if (s < 1)
-				continue;
-			char *argv[s];
+			if (s >= 1)
+			{
+				char *argv[s];
 
-			parse_arg(buf, argv, s);
-			status = execute(argv, head);
+				parse_arg(buf, argv, s);
+				status = execute(argv, head);
+			}
 		}
 	}
 	free_mem(buf, head);
