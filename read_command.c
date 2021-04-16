@@ -18,16 +18,9 @@ ssize_t read_cmd(char **buf_ptr, size_t *len_ptr, list_t *head)
 
 	while ((nread = getline(buf_ptr, len_ptr, stdin)) == -1)
 	{
-		if (feof(stdin))
-		{
 			write(STDOUT_FILENO, "\n", 1);
 			free_mem(*buf_ptr, head);
 			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			exit(EXIT_FAILURE);
-		}
 	}
 	return (nread);
 }
