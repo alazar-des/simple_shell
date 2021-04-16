@@ -14,7 +14,7 @@
 char *_getenv(const char *name, list_t **head)
 {
 	unsigned int i;
-	char *token, *value;
+	char *token, *value, *temp;
 	const char *delim = "=";
 	const char *delim2 = ":";
 
@@ -22,8 +22,7 @@ char *_getenv(const char *name, list_t **head)
 	value = NULL;
 	while (environ[i])
 	{
-		const size_t len = _strlen(environ[i]) + 1;
-		char temp[len];
+		temp = _strdup(environ[i]);
 
 		cpy_str(environ[i], temp);
 		token = strtok(temp, delim);
@@ -34,6 +33,7 @@ char *_getenv(const char *name, list_t **head)
 				add_node_end(head, value);
 			}
 		}
+		free (temp);
 		i++;
 	}
 	return (value);
